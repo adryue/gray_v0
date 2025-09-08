@@ -5,6 +5,8 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
+#include "Key.h"
+
 namespace gray
 {
 	class Window
@@ -20,6 +22,8 @@ namespace gray
 		void clear();
 		void draw(); //draw(shape)
 		void display();
+
+		bool isKeyPressed(Key key);
 	private:
 		GLFWwindow* m_Window;
 	};

@@ -58,7 +58,7 @@ namespace gray
 	}
 	void Window::close()
 	{
-		glfwTerminate();
+		glfwSetWindowShouldClose(m_Window, true);
 	}
 
 	void Window::pollEvents()
@@ -67,6 +67,7 @@ namespace gray
 	}
 	void Window::clear()
 	{
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 	void Window::draw()
@@ -77,5 +78,10 @@ namespace gray
 	{
 		/* Swap front and back buffers */
 		glfwSwapBuffers(m_Window);
+	}
+
+	bool Window::isKeyPressed(Key key)
+	{
+		return glfwGetKey(m_Window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
 	}
 }
