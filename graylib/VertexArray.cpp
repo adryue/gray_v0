@@ -12,7 +12,7 @@ VertexArray::~VertexArray()
 	glDeleteVertexArrays(1, &m_ID);
 }
 
-void VertexArray::addBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
+void VertexArray::addVertexBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
 {
 	bind();
 	vb.bind();
@@ -25,12 +25,17 @@ void VertexArray::addBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 		offset += elements[i].count * VertexBufferElement::getSizeOfType(elements[i].type);
 	}
 }
+void VertexArray::addIndexBuffer(const IndexBuffer& ib)
+{
+	bind();
+	ib.bind();
+}
 
-void VertexArray::bind()
+void VertexArray::bind() const
 {
 	glBindVertexArray(m_ID);
 }
-void VertexArray::unbind()
+void VertexArray::unbind() const
 {
 	glBindVertexArray(0);
 }

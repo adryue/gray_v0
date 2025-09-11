@@ -5,6 +5,7 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
+#include "Drawable.h"
 #include "Key.h"
 
 namespace gray
@@ -20,7 +21,7 @@ namespace gray
 
 		void pollEvents();
 		void clear();
-		void draw(); //draw(shape)
+		void draw(Drawable& drawable); //draw(shape)
 		void display();
 
 		bool isKeyPressed(Key key);

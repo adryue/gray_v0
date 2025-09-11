@@ -11,22 +11,29 @@ int main()
 	gray::Window window(1280, 720, "Hello!");
 
 	gray::TriangleShape shape;
-	shape.setPoint(0, { 10.0f, 10.0f });
-	shape.setPoint(1, { 300.0f, 300.0f });
-	shape.setPoint(2, { 10.0f, 300.0f });
+	shape.setPoint(0, { 0.5f, 0.5f });
+	shape.setPoint(1, { 0.5f, -0.8f });
+    shape.setPoint(2, { -0.5f, -0.5f });
+    shape.setFillColor(gray::Color::Cyan);
 
+    float position = -1.0f;
 
 	while (window.isOpen())
 	{
 		window.clear();
-		window.pollEvents();
 
 		if (window.isKeyPressed(gray::Key::Escape))
 		{
 			window.close();
 		}
 
+        shape.setPoint(2, { position, -0.5f });
+		position += 0.001f;
+		window.draw(shape);
+
 		window.display();
+
+		window.pollEvents();
 	}
 
 	window.close();

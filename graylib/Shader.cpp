@@ -4,6 +4,7 @@
 #include <streambuf>
 #include <iostream>
 #include <glad/gl.h>
+#include <glm/gtc/type_ptr.hpp>
 
 Shader::Shader(std::string vertexFilePath, std::string fragmentFilePath) :
 	m_VertexFilePath(vertexFilePath),
@@ -42,26 +43,30 @@ Shader::~Shader()
 	glDeleteProgram(m_ID);
 }
 
-void Shader::bind()
+void Shader::bind() const
 {
 	glUseProgram(m_ID);
 }
-void Shader::unbind()
+void Shader::unbind() const
 {
 	glUseProgram(0);
 }
 
-void Shader::SetUniform1i(const std::string& name, int value)
+void Shader::setUniform1i(const std::string& name, int value)
 {
 	glUniform1i(getUniformLocation(name), value);
 }
-void Shader::SetUniform1f(const std::string& name, float value)
+void Shader::setUniform1f(const std::string& name, float value)
 {
 	glUniform1f(getUniformLocation(name), value);
 }
-void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
+void Shader::setUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
 {
 	glUniform4f(getUniformLocation(name), v0, v1, v2, v3);
+}
+void Shader::setUniformMat4f(const std::string& name, const glm::mat4& matrix)
+{
+	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 std::string Shader::parseShader(const std::string& filePath)
