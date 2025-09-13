@@ -1,16 +1,22 @@
 #pragma once
 
-class IndexBuffer
+namespace gray
 {
-private:
-	unsigned int m_ID;
-	unsigned int m_Count;
-public:
-	IndexBuffer(const unsigned int* data, unsigned int count);
-	~IndexBuffer();
+	class IndexBuffer
+	{
+	private:
+		unsigned int m_ID;
+		unsigned int m_Count;
+	public:
+		IndexBuffer();
+		IndexBuffer(const unsigned int* data, unsigned int count);
+		~IndexBuffer();
 
-	void bind() const;
-	void unbind() const;
+		void sendData(const unsigned int* data, unsigned int count);
 
-	inline unsigned int getCount() const { return m_Count; }
-};
+		void bind() const;
+		void unbind() const;
+
+		inline unsigned int getCount() const { return m_Count; }
+	};
+}

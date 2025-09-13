@@ -2,9 +2,12 @@
 
 namespace gray
 {
+	class Window;
+
 	class Drawable
 	{
-	public:
-		virtual void draw() {}
+	protected:
+		friend class Window;
+		virtual void draw(Window& window) const = 0;
 	};
 }

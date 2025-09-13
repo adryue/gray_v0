@@ -2,40 +2,43 @@
 
 #include <glad/gl.h>
 
-VertexArray::VertexArray()
+namespace gray
 {
-	glGenVertexArrays(1, &m_ID);
-}
-
-VertexArray::~VertexArray()
-{
-	glDeleteVertexArrays(1, &m_ID);
-}
-
-void VertexArray::addVertexBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
-{
-	bind();
-	vb.bind();
-	auto& elements = layout.getElements();
-	unsigned int offset = 0;
-	for (unsigned int i = 0; i < elements.size(); i++)
+	VertexArray::VertexArray()
 	{
-		glEnableVertexAttribArray(i);
-		glVertexAttribPointer(i, elements[i].count, elements[i].type, elements[i].normalized, layout.getStride(), (void*)offset);
-		offset += elements[i].count * VertexBufferElement::getSizeOfType(elements[i].type);
+		glGenVertexArrays(1, &m_ID);
 	}
-}
-void VertexArray::addIndexBuffer(const IndexBuffer& ib)
-{
-	bind();
-	ib.bind();
-}
 
-void VertexArray::bind() const
-{
-	glBindVertexArray(m_ID);
-}
-void VertexArray::unbind() const
-{
-	glBindVertexArray(0);
+	VertexArray::~VertexArray()
+	{
+		glDeleteVertexArrays(1, &m_ID);
+	}
+
+	void VertexArray::addVertexBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
+	{
+		bind();
+		vb.bind();
+		auto& elements = layout.getElements();
+		unsigned int offset = 0;
+		for (unsigned int i = 0; i < elements.size(); i++)
+		{
+			glEnableVertexAttribArray(i);
+			glVertexAttribPointer(i, elements[i].count, elements[i].type, elements[i].normalized, layout.getStride(), (void*)offset);
+			offset += elements[i].count * VertexBufferElement::getSizeOfType(elements[i].type);
+		}
+	}
+	void VertexArray::addIndexBuffer(const IndexBuffer& ib)
+	{
+		bind();
+		ib.bind();
+	}
+
+	void VertexArray::bind() const
+	{
+		glBindVertexArray(m_ID);
+	}
+	void VertexArray::unbind() const
+	{
+		glBindVertexArray(0);
+	}
 }

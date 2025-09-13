@@ -49,6 +49,10 @@ namespace gray
 			lhs -= rhs;
 			return lhs;
 		}
+		Vector2 operator-()
+		{
+			return { -x, -y };
+		}
 		friend std::ostream& operator<<(std::ostream& os, const Vector2& vec)
 		{
 			os << "(" << vec.x << ", " << vec.y << ")";

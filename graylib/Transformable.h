@@ -25,7 +25,7 @@ namespace gray
 		Vector2f getOrigin();
 		void setOrigin(const Vector2f& origin);
 
-		glm::mat4 getMatrix();
+		glm::mat4 getTransformMatrix() const;
 
 	private:
 		Vector2f m_Position;

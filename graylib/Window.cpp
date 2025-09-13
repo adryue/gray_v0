@@ -61,6 +61,8 @@ namespace gray
 			glDebugMessageCallback(glDebugOutput, nullptr);
 			glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 		}
+
+		m_Shader = std::make_unique<Shader>("shader.vert", "shader.frag");
 	}
 	Window::~Window()
 	{
@@ -85,20 +87,43 @@ namespace gray
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
-	void Window::draw(Drawable& drawable)
+	void Window::draw(const Drawable& drawable)
+	{
+		drawable.draw(*this);
+	}
+	void Window::drawShape(const VertexArray& vertexArray, const glm::mat4& transform, const Color& fillColor)
 	{
 		glfwMakeContextCurrent(m_Window);
-		drawable.draw();
+		
+		m_Shader->bind();
+		m_Shader->setUniform4f("u_Color", fillColor.rFloat(), fillColor.gFloat(), fillColor.bFloat(), fillColor.aFloat());
+
+		glm::mat4 mvp = m_Camera.getProjectionMatrix() * m_Camera.getViewMatrix() * transform;
+		m_Shader->setUniformMat4f("u_Transform", mvp);
+
+		vertexArray.bind();
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 	}
+
 	void Window::display()
 	{
 		/* Swap front and back buffers */
 		glfwSwapBuffers(m_Window);
 	}
 
+	Camera& Window::getCamera()
+	{
+		return m_Camera;
+	}
+
+	void Window::setCamera(const Camera& camera)
+	{
+		m_Camera = camera;
+	}
+
 	bool Window::isKeyPressed(Key key)
 	{
-		return glfwGetKey(m_Window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
+		return glfwGetKey(m_Window, (int)key) == GLFW_PRESS;
 	}
 }
 

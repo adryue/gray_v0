@@ -2,8 +2,11 @@
 
 #include <iostream>
 #include "VertexBufferLayout.h"
+#include "Window.h"
 
 static const std::size_t SIZE_OF_DATA = 6 * sizeof(float);
+
+static const unsigned int ELEMENT_BUFFER_INDICES[] = {0, 1, 2};
 
 namespace gray
 {
@@ -12,20 +15,17 @@ namespace gray
 			{ 0.0f, 0.0f },
 			{ 0.0f, 0.0f },
 			{ 0.0f, 0.0f }
-		},
-		m_Shader("shader.vert", "shader.frag")
+		}
 	{
 		updateVertexBuffer();
+
 		VertexBufferLayout layout;
 		layout.push<float>(2);
+
+		m_IndexBuffer.sendData(ELEMENT_BUFFER_INDICES, sizeof(ELEMENT_BUFFER_INDICES) / sizeof(ELEMENT_BUFFER_INDICES[0]));
+
 		m_VertexArray.addVertexBuffer(m_VertexBuffer, layout);
-	}
-	void TriangleShape::draw()
-	{
-		m_Shader.bind();
-		m_VertexArray.bind();
-		m_Shader.setUniform4f("u_Color", getFillColor().rFloat(), getFillColor().gFloat(), getFillColor().bFloat(), getFillColor().aFloat());
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		m_VertexArray.addIndexBuffer(m_IndexBuffer);
 	}
 	Vector2f TriangleShape::getPoint(std::size_t index)
 	{
