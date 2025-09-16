@@ -13,12 +13,11 @@ namespace gray
 	class Shape : public Drawable, public Transformable
 	{
 	public:
+		Shape();
+
 		void draw(Window& window) const override;
 
-		const VertexArray& getVertexArray();
-
 		const VertexBuffer& getVertexBuffer() const;
-		const IndexBuffer& getIndexBuffer() const;
 		const VertexArray& getVertexArray() const;
 
 		Color getFillColor() const;
@@ -26,7 +25,6 @@ namespace gray
 
 	protected:
 		VertexBuffer m_VertexBuffer;
-		IndexBuffer m_IndexBuffer;
 		VertexArray m_VertexArray;
 		Color m_FillColor;
 		Color m_OutlineColor;

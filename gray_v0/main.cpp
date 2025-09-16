@@ -2,6 +2,7 @@
 
 #include <Window.h>
 #include <TriangleShape.h>
+#include <CircleShape.h>
 #include <Vector.h>
 
 static const int WINDOW_WIDTH = 1280;
@@ -17,24 +18,24 @@ int main()
 	window.setCamera(camera);
 
 	gray::TriangleShape shape;
-	/*shape.setPoint(0, { 0.5f, 0.5f });
-	shape.setPoint(1, { 0.5f, -0.5f });
-    shape.setPoint(2, { -0.5f, -0.5f });*/
 	shape.setPoint(0, { 500.0f, 100.0f });
 	shape.setPoint(1, { 100.0f, -100.0f });
 	shape.setPoint(2, { -100.0f, -100.0f });
     shape.setFillColor(gray::Color::Cyan);
-
-	//shape.setPosition({ 0.2f, 0.2f });
-	//shape.setRotation(45.0f);
-	//shape.setScale({ 1.5f, 1.0f });
+	shape.setScale({ 1.5f, 1.0f });
 
 	gray::TriangleShape shape2;
 	shape2.setPoint(0, { -200.0f, -200.0f });
 	shape2.setPoint(1, { -150.0f, -150.0f });
 	shape2.setPoint(2, { -150.0f, -200.0f });
 
-    float position = -1.0f;
+	gray::CircleShape circle1;
+	circle1.setRadius(100.0f);
+	circle1.setPointCount(3);
+	circle1.setFillColor(gray::Color::Green);
+	circle1.setPosition({200.0f, 200.0f});
+
+    float rotation = -1.0f;
 
 	while (window.isOpen())
 	{
@@ -69,10 +70,11 @@ int main()
 			window.getCamera().rotate(-0.05f);
 		}
 
-		//shape.setRotation(position);
-		//position += 0.01f;
+		shape.setRotation(rotation);
+		rotation += 0.01f;
 		window.draw(shape);
 		window.draw(shape2);
+		window.draw(circle1);
 
 		window.display();
 

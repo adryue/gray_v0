@@ -6,8 +6,6 @@
 
 static const std::size_t SIZE_OF_DATA = 6 * sizeof(float);
 
-static const unsigned int ELEMENT_BUFFER_INDICES[] = {0, 1, 2};
-
 namespace gray
 {
 	TriangleShape::TriangleShape() :
@@ -18,14 +16,6 @@ namespace gray
 		}
 	{
 		updateVertexBuffer();
-
-		VertexBufferLayout layout;
-		layout.push<float>(2);
-
-		m_IndexBuffer.sendData(ELEMENT_BUFFER_INDICES, sizeof(ELEMENT_BUFFER_INDICES) / sizeof(ELEMENT_BUFFER_INDICES[0]));
-
-		m_VertexArray.addVertexBuffer(m_VertexBuffer, layout);
-		m_VertexArray.addIndexBuffer(m_IndexBuffer);
 	}
 	Vector2f TriangleShape::getPoint(std::size_t index)
 	{

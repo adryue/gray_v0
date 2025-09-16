@@ -62,6 +62,9 @@ namespace gray
 			glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 		}
 
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		m_Shader = std::make_unique<Shader>("shader.vert", "shader.frag");
 	}
 	Window::~Window()
@@ -103,6 +106,19 @@ namespace gray
 
 		vertexArray.bind();
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
+	void Window::drawCircle(const VertexArray& vertexArray, const unsigned int numVertices, const glm::mat4& transform, const Color& fillColor)
+	{
+		glfwMakeContextCurrent(m_Window);
+
+		m_Shader->bind();
+		m_Shader->setUniform4f("u_Color", fillColor.rFloat(), fillColor.gFloat(), fillColor.bFloat(), fillColor.aFloat());
+
+		glm::mat4 mvp = m_Camera.getProjectionMatrix() * m_Camera.getViewMatrix() * transform;
+		m_Shader->setUniformMat4f("u_Transform", mvp);
+
+		vertexArray.bind();
+		glDrawArrays(GL_TRIANGLE_FAN, 0, numVertices);
 	}
 
 	void Window::display()

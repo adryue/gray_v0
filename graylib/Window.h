@@ -31,6 +31,7 @@ namespace gray
 
 		void draw(const Drawable& drawable); //draw(shape)
 		void drawShape(const VertexArray& vertexArray, const glm::mat4& transform, const Color& fillColor);
+		void drawCircle(const VertexArray& vertexArray, const unsigned int numVertices, const glm::mat4& transform, const Color& fillColor);
 
 		void display();
 

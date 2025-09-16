@@ -4,6 +4,15 @@
 
 namespace gray
 {
+	Shape::Shape()
+	{
+		//data will be formated like this:
+		//[X1, Y1, X2, Y2, X3, Y3...]
+		VertexBufferLayout layout;
+		layout.push<float>(2);
+
+		m_VertexArray.addVertexBuffer(m_VertexBuffer, layout);
+	}
 	void Shape::draw(Window& window) const
 	{
 		window.drawShape(m_VertexArray, getTransformMatrix(), m_FillColor);
@@ -12,10 +21,6 @@ namespace gray
 	const VertexBuffer& Shape::getVertexBuffer() const
 	{
 		return m_VertexBuffer;
-	}
-	const IndexBuffer& Shape::getIndexBuffer() const
-	{
-		return m_IndexBuffer;
 	}
 	const VertexArray& Shape::getVertexArray() const
 	{
